@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { ArrowLeft, CalendarDays, CalendarPlus, Dumbbell, History, NotebookPen, Target, Wallet } from 'lucide-react'
-import { AGENDA, ESTILOS, METAS, NOTAS, PAGOS, TORNEOS, HOY, alumnoPorId, constancia, diasDesde, etiqueta, flechasDe, promedio, promedioSemanal, sesionesEntre } from '../datos.js'
+import { AGENDA, ESTILOS, METAS, NOTAS, PAGOS, TORNEOS, HOY, alumnoPorId, enDias, constancia, diasDesde, etiqueta, flechasDe, promedio, promedioSemanal, sesionesEntre } from '../datos.js'
 import { Barra, Diana, LineaPromedio, Sello, anilloDe } from '../graficas.jsx'
 import { Numero } from '../movimiento.jsx'
+import { CampoFecha, CampoHora, aISO } from '../selectores.jsx'
 import { dec, fechaCorta, iniciales, pesos, relativo } from '../formato.js'
 
 const PERIODOS = { 7: 'Última semana', 30: 'Últimos 30 días', 90: 'Últimos 90 días' }
@@ -151,8 +152,8 @@ export default function Perfil({ id }) {
                 <select name="tipo"><option>Psicología</option><option>Fisioterapia</option><option>Nutrición</option><option>Capacitación</option><option>Clase</option></select>
               </label>
               <label>Motivo<input name="titulo" placeholder="Ej. revisión de hombro" /></label>
-              <label>Fecha<input name="fecha" type="date" required /></label>
-              <label>Hora<input name="hora" type="time" defaultValue="17:00" /></label>
+              <label>Fecha<CampoFecha name="fecha" defaultValue={aISO(enDias(1))} etiqueta="Fecha de la cita" /></label>
+              <label>Hora<CampoHora name="hora" defaultValue="17:00" etiqueta="Hora de la cita" /></label>
               <label>Con<input name="con" placeholder="Nombre del especialista" /></label>
               <div className="acciones">
                 <button type="button" className="boton secundario" onClick={() => setFormCita(false)}>Cancelar</button>

@@ -42,7 +42,7 @@
 .estado-3 { --estado: var(--bien); }
 .estados-barra span { background: var(--estado); }
 
-.torneo-detalle { position: sticky; top: 20px; display: grid; gap: 14px; animation: entrar 0.3s var(--curva) both; }
+.torneo-detalle { position: sticky; top: 20px; display: grid; gap: 14px; animation: entrar 0.3s var(--curva) backwards; }
 .detalle-cabeza { display: flex; gap: 14px; align-items: center; }
 .detalle-cabeza h2 { margin: 2px 0; font-size: 1.5rem; }
 .detalle-cabeza small { color: var(--secundario); }
@@ -115,7 +115,7 @@
 .avance small { font-size: 0.74rem; }
 .puntos { font: 700 1.25rem var(--display); }
 
-.nuevo-torneo { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) both; }
+.nuevo-torneo { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) backwards; }
 .nuevo-torneo h2 { display: flex; align-items: center; gap: 8px; margin: 0; }
 .nuevo-torneo-campos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .nuevo-torneo-campos .ancho { grid-column: span 2; }

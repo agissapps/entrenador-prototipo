@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { CalendarPlus, Check, MapPin, Medal, Plus, Radio, Ruler, Trash2, Users, Wallet, X } from 'lucide-react'
-import { ALUMNOS, ESTADOS_TORNEO, ESTILOS, GRUPOS, METAS, RESULTADOS_INTERNO, TORNEOS, alumnoPorId, constancia, diasDesde, flechasDe, promedio, sesionesEntre } from '../datos.js'
+import { ALUMNOS, ESTADOS_TORNEO, ESTILOS, GRUPOS, METAS, RESULTADOS_INTERNO, TORNEOS, alumnoPorId, enDias, constancia, diasDesde, flechasDe, promedio, sesionesEntre } from '../datos.js'
 import { Barra, Sello } from '../graficas.jsx'
 import { Avatares, Pestanas, useAviso } from '../comunes.jsx'
 import { dec, fechaCorta, iniciales, pesos, relativo } from '../formato.js'
+import { CampoFecha, aISO } from '../selectores.jsx'
 import './torneos.css'
 
 const diaSemana = new Intl.DateTimeFormat('es-MX', { weekday: 'short' })
@@ -295,8 +296,8 @@ function NuevoTorneo({ cerrar, crear }) {
       <div className="nuevo-torneo-campos">
         <label className="campo ancho">Nombre<input name="nombre" required placeholder="Ej. Copa de Primavera" /></label>
         <label className="campo">Tipo<select name="tipo"><option>Externo</option><option>Interno</option></select></label>
-        <label className="campo">Fecha<input name="fecha" type="date" required /></label>
-        <label className="campo">Cierre de inscripción<input name="cierre" type="date" /></label>
+        <label className="campo">Fecha<CampoFecha name="fecha" defaultValue={aISO(enDias(21))} etiqueta="Fecha del torneo" /></label>
+        <label className="campo">Cierre de inscripción<CampoFecha name="cierre" defaultValue={aISO(enDias(14))} etiqueta="Cierre de inscripción" /></label>
         <label className="campo">Sede<input name="sede" placeholder="Campo del club" /></label>
         <label className="campo">Distancias<input name="distancias" placeholder="18 m" /></label>
         <label className="campo">Costo<input name="costo" type="number" min="0" placeholder="0" /></label>

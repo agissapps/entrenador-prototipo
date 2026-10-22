@@ -3,6 +3,9 @@
 import { useRef, useState } from 'react'
 import { Check } from 'lucide-react'
 
+/** Abre el correo del usuario con el soporte de la app ya puesto (el mismo de los términos y la privacidad). */
+export const CORREO_SOPORTE = `mailto:agiss.apps@gmail.com?subject=${encodeURIComponent('Soporte: Diario de Tiro Entrenador')}`
+
 /** Aviso que sale abajo unos segundos para confirmar algo («Pago registrado»). */
 export function useAviso() {
   const [texto, setTexto] = useState(null)

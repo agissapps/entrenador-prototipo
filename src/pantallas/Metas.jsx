@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { AlarmClock, CheckCircle2, Goal, PencilLine, Plus, TrendingUp, X } from 'lucide-react'
-import { ALUMNOS, GRUPOS, METAS, alumnoPorId, diasDesde } from '../datos.js'
+import { ALUMNOS, GRUPOS, METAS, alumnoPorId, diasDesde, enDias } from '../datos.js'
 import { Barra } from '../graficas.jsx'
 import { useAviso } from '../comunes.jsx'
 import { dec, iniciales, relativo } from '../formato.js'
 import { Numero } from '../movimiento.jsx'
+import { CampoFecha, aISO } from '../selectores.jsx'
 import './metas.css'
 
 const TIPOS = {
@@ -56,7 +57,7 @@ function NuevaMeta({ cerrar, crear }) {
       <div className="nueva-meta-campos">
         <label className="campo ancho">Descripción<input name="texto" placeholder={TIPOS[tipo].ejemplo} /></label>
         <label className="campo">Objetivo ({TIPOS[tipo].unidad})<input name="objetivo" type="number" step="any" required /></label>
-        <label className="campo">Fecha límite<input name="vence" type="date" required /></label>
+        <label className="campo">Fecha límite<CampoFecha name="vence" defaultValue={aISO(enDias(30))} etiqueta="Fecha límite" /></label>
         <label className="campo">Para
           <select value={para} onChange={(e) => setPara(e.target.value)}><option value="grupo">Un grupo</option><option value="alumno">Un alumno</option></select>
         </label>

@@ -48,7 +48,7 @@
 .bloques { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .bloque {
   display: grid; gap: 8px; padding: 12px 14px; border-radius: 14px; background: var(--superficie);
-  box-shadow: inset 4px 0 0 var(--bloque), inset 0 0 0 1px var(--linea); animation: entrar 0.3s var(--curva) both;
+  box-shadow: inset 4px 0 0 var(--bloque), inset 0 0 0 1px var(--linea); animation: entrar 0.3s var(--curva) backwards;
 }
 .bloque-cabeza { display: flex; align-items: center; gap: 10px; }
 .bloque-icono {

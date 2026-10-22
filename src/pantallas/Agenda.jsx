@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { CalendarPlus, ChevronLeft, ChevronRight, Clock, MapPin, Plus, Users, X } from 'lucide-react'
 import { AGENDA, ALUMNOS, CLASES, GRUPOS, HOY, TORNEOS, alumnoPorId, plantillaPorId } from '../datos.js'
 import { Avatares, useAviso } from '../comunes.jsx'
+import { CampoFecha, CampoHora } from '../selectores.jsx'
 import './agenda.css'
 
 const TIPOS = ['Clase', 'Psicología', 'Fisioterapia', 'Nutrición', 'Capacitación', 'Junta', 'Torneo']
@@ -46,8 +47,8 @@ function NuevoEvento({ dia, cerrar, crear }) {
       <div className="nuevo-evento-campos">
         <label className="campo">Tipo<select name="tipo">{TIPOS.filter((t) => t !== 'Torneo' && t !== 'Clase').map((t) => <option key={t}>{t}</option>)}</select></label>
         <label className="campo ancho">Motivo<input name="titulo" placeholder="Ej. revisión de hombro, clínica de afinación" /></label>
-        <label className="campo">Día<input name="fecha" type="date" defaultValue={iso} required /></label>
-        <label className="campo">Hora<input name="hora" type="time" defaultValue="17:00" /></label>
+        <label className="campo">Día<CampoFecha name="fecha" defaultValue={iso} etiqueta="Día del evento" /></label>
+        <label className="campo">Hora<CampoHora name="hora" defaultValue="17:00" etiqueta="Hora del evento" /></label>
         <label className="campo">Con quién<input name="con" placeholder="Especialista o lugar" /></label>
         <label className="campo">Para
           <select value={para} onChange={(e) => setPara(e.target.value)}><option value="grupos">Uno o varios grupos</option><option value="alumno">Un alumno</option></select>

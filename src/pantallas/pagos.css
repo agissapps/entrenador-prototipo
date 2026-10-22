@@ -27,7 +27,7 @@
 .acciones-fila { text-align: right; white-space: nowrap; }
 .acciones-fila > * { display: inline-grid; vertical-align: middle; margin-left: 4px; }
 
-.registrar-pago { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) both; }
+.registrar-pago { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) backwards; }
 .registrar-pago h2 { display: flex; align-items: center; gap: 8px; margin: 0; }
 .registrar-campos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .registrar-campos .ancho { grid-column: span 2; }

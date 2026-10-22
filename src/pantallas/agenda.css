@@ -40,7 +40,7 @@
 .mas-eventos { font-size: 0.7rem; color: var(--secundario); font-weight: 600; }
 .puntos-dia { display: none; gap: 3px; }
 
-.dia-detalle { position: sticky; top: 20px; display: grid; gap: 14px; animation: entrar 0.3s var(--curva) both; }
+.dia-detalle { position: sticky; top: 20px; display: grid; gap: 14px; animation: entrar 0.3s var(--curva) backwards; }
 .dia-detalle h2 { font-size: 1.4rem; margin: 0; }
 .dia-detalle h2::first-letter { text-transform: uppercase; }
 .eventos-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -51,7 +51,7 @@
 .evento-personas { display: flex; align-items: center; gap: 8px; margin-top: 4px; color: var(--secundario); }
 .dia-vacio { display: grid; gap: 10px; justify-items: start; }
 
-.nuevo-evento { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) both; }
+.nuevo-evento { display: grid; gap: 14px; animation: entrar 0.3s var(--curva) backwards; }
 .nuevo-evento h2 { display: flex; align-items: center; gap: 8px; margin: 0; }
 .nuevo-evento-campos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .nuevo-evento-campos .ancho { grid-column: span 3; }

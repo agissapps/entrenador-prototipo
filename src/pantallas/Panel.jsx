@@ -2,11 +2,18 @@ import { AlarmClock, BadgeDollarSign, CalendarClock, Crosshair, Flag, TrendingDo
 import { AGENDA, ALUMNOS, CLUB, METAS, TORNEOS, alumnoPorId, cambio, diasDesde, flechasDe, promedio, promedioSemanal, sesionesEntre, ultimaSesion, HOY } from '../datos.js'
 import { fechaLarga, relativo, iniciales, dec } from '../formato.js'
 import { LineaDeTiro } from '../graficas.jsx'
+import { leerSesion } from '../sesion.js'
 import { Numero } from '../movimiento.jsx'
 
 const diaSemana = new Intl.DateTimeFormat('es-MX', { weekday: 'short' })
 const diaMes = new Intl.DateTimeFormat('es-MX', { day: 'numeric' })
 const mes = new Intl.DateTimeFormat('es-MX', { month: 'short' })
+
+/** El nombre con que se saluda: el de la cuenta, o el apellido del entrenador de prueba. */
+function nombreCorto() {
+  const nombre = leerSesion()?.nombre || CLUB.entrenador
+  return nombre.startsWith('Entrenador ') ? nombre.split(' ')[1] : nombre.split(' ')[0]
+}
 
 function saludo() {
   const h = new Date().getHours()
@@ -96,7 +103,7 @@ export default function Panel() {
         <header className="saludo">
           <div>
             <p className="fecha-hoy">{fechaLarga(HOY)}</p>
-            <h1>{saludo()}, {CLUB.entrenador.split(' ')[1]}</h1>
+            <h1>{saludo()}, {nombreCorto()}</h1>
           </div>
           <a className="boton oro" href="#/entrenamientos"><Crosshair size={18} aria-hidden="true" /> Mandar la clase de hoy</a>
         </header>

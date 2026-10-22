@@ -1,9 +1,8 @@
 /*
- * Dirección visual: el campo de tiro. Verde bosque para el menú y las portadas, los colores de
- * los anillos de la diana como lenguaje para los promedios (oro, rojo, azul, negro, blanco) y
- * una letra angosta de marcador deportivo (Barlow Condensed) para títulos y números.
- * De día, el campo y la diana: verde pasto para el menú y las portadas, blanco de fondo, azul
- * como color principal y amarillo, rojo y negro como acentos.
+ * Dirección visual: la diana. Sus anillos (oro, rojo, azul, negro, blanco) son el lenguaje de los
+ * promedios y el color base: de día, menú azul, portadas negras, fondo blanco, azul como color
+ * principal y amarillo, rojo y negro como acentos. Letra angosta de marcador deportivo (Barlow
+ * Condensed) para títulos y números. El verde bosque queda como opción en el botón de la paleta.
  * De noche, solo los colores de la diana: negro de fondo, blanco para el texto, azul como color
  * principal, amarillo para lo destacado y rojo para lo que va mal.
  */
@@ -11,9 +10,9 @@
   --fondo: #f2f3ee;
   --superficie: #ffffff;
   --superficie-2: #f6f7f3;
-  --bosque: #163a29;
-  --bosque-2: #1f4d36;
-  --bosque-tinta: #cfe0d4;
+  --bosque: #173a80;
+  --bosque-2: #2462c6;
+  --bosque-tinta: #cfdcf5;
   --tinta: #1e1e1e;
   --secundario: #5f625c;
   --linea: #e1e3dc;
@@ -34,9 +33,9 @@
   --azul-fondo: #e6eefb;
   --bien-fondo: #e2f0e3;
   --patron: rgb(36 98 198 / 8%);
-  --brillo-portada-1: rgb(242 183 5 / 16%);
-  --brillo-portada-2: rgb(143 212 155 / 12%);
-  --portada-fondo: linear-gradient(160deg, var(--bosque-2), var(--bosque));
+  --brillo-portada-1: rgb(242 183 5 / 14%);
+  --brillo-portada-2: rgb(36 98 198 / 14%);
+  --portada-fondo: linear-gradient(160deg, #2b2b2b, #141414);
   --anillo-1: rgb(255 255 255 / 16%);
   --anillo-2: rgb(0 0 0 / 14%);
   --anillo-3: rgb(36 98 198 / 40%);
@@ -216,6 +215,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding: 8px 12px; color: var(--bosque-tinta); cursor: pointer; font-size: 0.86rem;
 }
 .boton-tema:hover { background: rgb(255 255 255 / 11%); color: #fff; }
+.botones-pie { display: grid; gap: 6px; }
 .usuario { display: flex; gap: 10px; align-items: center; padding-top: 14px; border-top: 1px solid rgb(255 255 255 / 9%); }
 .usuario strong, .usuario small { display: block; }
 .usuario strong { font-size: 0.9rem; color: #fff; }
@@ -226,7 +226,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .contenido { padding: clamp(16px, 2.2vw, 44px) clamp(16px, 2.6vw, 56px) 64px; max-width: 1680px; margin: 0 auto; width: 100%; min-width: 0; }
 
 /* Cambio de pantalla: el contenido entra suave. */
-.vista { animation: entrar 0.45s var(--curva) both; }
+.vista { animation: entrar 0.45s var(--curva) backwards; }
 @keyframes entrar { from { opacity: 0; transform: translateY(10px); } }
 
 /* ---------- Piezas comunes ---------- */
@@ -372,7 +372,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cifras { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: -26px 20px 34px; }
 .cifra-tarjeta {
   display: grid; gap: 4px; align-content: start; background: var(--superficie); border-radius: 18px; padding: 16px 18px;
-  box-shadow: var(--sombra-2); animation: entrar 0.5s var(--curva) both;
+  box-shadow: var(--sombra-2); animation: entrar 0.5s var(--curva) backwards;
 }
 .cifra-tarjeta:nth-child(2) { animation-delay: 60ms; }
 .cifra-tarjeta:nth-child(3) { animation-delay: 120ms; }
@@ -439,7 +439,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .tabla { width: 100%; border-collapse: collapse; }
 .tabla th { text-align: left; font-size: 0.82rem; font-weight: 600; color: var(--secundario); padding: 14px 16px; background: var(--superficie-2); white-space: nowrap; }
 .tabla td { padding: 11px 16px; border-top: 1px solid var(--linea); white-space: nowrap; }
-.tabla tbody tr { cursor: pointer; transition: background 0.15s; animation: entrar 0.4s var(--curva) both; }
+.tabla tbody tr { cursor: pointer; transition: background 0.15s; animation: entrar 0.4s var(--curva) backwards; }
 .tabla tbody tr { animation-delay: calc(var(--i, 0) * 1ms); }
 .tabla tbody tr:hover { background: var(--superficie-2); }
 .tabla tbody tr:hover .celda-alumno strong { color: var(--primario); }
@@ -531,11 +531,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .form-nota .boton { justify-self: end; }
 textarea { width: 100%; resize: vertical; }
 .notas { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.notas li { border-left: 3px solid var(--oro); padding-left: 12px; animation: entrar 0.35s var(--curva) both; }
+.notas li { border-left: 3px solid var(--oro); padding-left: 12px; animation: entrar 0.35s var(--curva) backwards; }
 .notas p { margin-top: 2px; }
 .form-cita {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; margin-bottom: 16px; border-radius: 16px;
-  background: var(--superficie-2); box-shadow: inset 0 0 0 1.5px var(--oro); animation: entrar 0.3s var(--curva) both;
+  background: var(--superficie-2); box-shadow: inset 0 0 0 1.5px var(--oro); animation: entrar 0.3s var(--curva) backwards;
 }
 .form-cita label { display: grid; gap: 4px; font-size: 0.84rem; color: var(--secundario); }
 .form-cita .acciones { grid-column: 1 / -1; justify-content: flex-end; }
@@ -606,7 +606,7 @@ textarea { width: 100%; resize: vertical; }
   .lateral li a { justify-content: center; padding: 12px 0; }
   .lateral li a.activo::before { left: -12px; }
   .pie-lateral { padding: 0; justify-items: center; }
-  .boton-tema { padding: 10px; }
+  .boton-tema { padding: 10px; justify-content: center; }
   .usuario { border-top: 0; padding-top: 0; }
   .cifras { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
@@ -860,6 +860,12 @@ textarea { width: 100%; resize: vertical; }
 :root[data-theme='dark'][data-paleta='wine'] .muestra.bajando { border-color: #8fa3c0; background: rgb(40 55 74 / 70%); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme='light'])[data-paleta='wine'] .muestra.bajando { border-color: #8fa3c0; background: rgb(40 55 74 / 70%); } }
 
+/* Verde bosque: el color base de antes, ahora como opción del menú y la portada. */
+:root[data-theme='light'][data-menu='bosque'] :is(.lateral, .barra-movil) { --bosque: #163a29; --bosque-2: #1f4d36; --bosque-tinta: #cfe0d4; }
+:root[data-theme='light'][data-portada='bosque'] .portada { --bosque-tinta: #cfe0d4; --portada-fondo: linear-gradient(160deg, #1f4d36, #163a29); --brillo-portada-1: rgb(242 183 5 / 16%); --brillo-portada-2: rgb(143 212 155 / 12%); }
+:root[data-theme='dark'][data-menu='bosque'] :is(.lateral, .barra-movil) { --bosque: #0f2a1d; --bosque-2: #174029; --bosque-tinta: #b6c8bc; }
+:root[data-theme='dark'][data-portada='bosque'] .portada { --bosque-tinta: #b6c8bc; --portada-fondo: linear-gradient(160deg, #174029, #0f2a1d); --brillo-portada-1: rgb(242 183 5 / 10%); --brillo-portada-2: transparent; }
+
 .selector-raiz { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: grid; justify-items: end; gap: 10px; }
 .boton-paleta {
   width: 48px; height: 48px; border-radius: 14px; border: 0; cursor: pointer; display: grid; place-items: center;
@@ -867,6 +873,19 @@ textarea { width: 100%; resize: vertical; }
   transition: transform 0.18s var(--curva), box-shadow 0.18s;
 }
 .boton-paleta:hover { transform: translateY(-2px) rotate(-8deg); box-shadow: var(--sombra-3), inset 0 0 0 1px var(--linea); }
+.boton-soporte { color: var(--mal); }
+/* Al pasar el mouse (o llegar con el teclado), cada botón flotante dice qué es, a su izquierda. */
+.boton-paleta { position: relative; }
+.boton-paleta[data-etiqueta]::after {
+  content: attr(data-etiqueta); position: absolute; right: calc(100% + 10px); top: 50%; transform: translate(6px, -50%);
+  padding: 6px 11px; border-radius: 9px; white-space: nowrap; pointer-events: none;
+  background: var(--tinta); color: var(--superficie); font: 600 0.82rem var(--texto); box-shadow: var(--sombra-2);
+  opacity: 0; transition: opacity 0.15s, transform 0.15s var(--curva);
+}
+.boton-paleta[data-etiqueta]:hover::after, .boton-paleta[data-etiqueta]:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
+/* El botón se inclina al pasar el mouse; la etiqueta no. */
+.boton-paleta:hover { transform: translateY(-2px); }
+.boton-paleta:hover svg { transform: rotate(-10deg); transition: transform 0.18s var(--curva); }
 .boton-paleta.abierto { background: var(--oro); color: var(--oro-tinta); box-shadow: var(--sombra-2); }
 .selector-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .selector-variante .selector-cerrar {

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { ArrowDown, ArrowUp, BookmarkPlus, Check, Clock, Copy, Dumbbell, Flame, Plus, Send, Smartphone, Snowflake, Target, Trash2, Users, Wind } from 'lucide-react'
 import { ALUMNOS, CLASES, GRUPOS, HOY, PLANTILLAS, TIPOS_BLOQUE, diasDesde, plantillaPorId } from '../datos.js'
 import { Barra } from '../graficas.jsx'
+import { CampoFecha, CampoHora } from '../selectores.jsx'
 import './entrenamientos.css'
 
 const ICONOS_BLOQUE = { calentamiento: Flame, tecnica: Target, tiro: Wind, fisico: Dumbbell, enfriamiento: Snowflake }
@@ -81,7 +82,7 @@ function Bloque({ b, i, total, cambiar, mover, quitar }) {
 }
 
 /** Cómo verá la clase el alumno en la app del teléfono. */
-function VistaApp({ clase }) {
+export function VistaApp({ clase }) {
   const fecha = new Date(`${clase.fecha}T00:00`)
   return (
     <div className="telefono" aria-label="Vista previa en la app">
@@ -184,8 +185,8 @@ export default function Entrenamientos() {
 
           <div className="editor-fila">
             <label className="campo ancho">Nombre de la clase<input value={clase.nombre} onChange={(e) => cambiar({ nombre: e.target.value })} /></label>
-            <label className="campo">Día<input type="date" value={clase.fecha} onChange={(e) => cambiar({ fecha: e.target.value })} /></label>
-            <label className="campo">Hora<input type="time" value={clase.hora} onChange={(e) => cambiar({ hora: e.target.value })} /></label>
+            <label className="campo">Día<CampoFecha value={clase.fecha} onChange={(fecha) => cambiar({ fecha })} etiqueta="Día de la clase" /></label>
+            <label className="campo">Hora<CampoHora value={clase.hora} onChange={(hora) => cambiar({ hora })} etiqueta="Hora de la clase" /></label>
           </div>
           <label className="campo">Objetivo técnico<input value={clase.objetivo} onChange={(e) => cambiar({ objetivo: e.target.value })} placeholder="Ej. que el anclaje sea el mismo en cada flecha" /></label>
 
