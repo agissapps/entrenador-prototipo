@@ -7,9 +7,4 @@ Verla en línea: https://agissapps.github.io/entrenador-prototipo/
 
 ## Correrla en la computadora
 
-```bash
-npm install
-npm run dev
-```
 
-Se publica sola en GitHub Pages cada vez que se sube un cambio a `main`.
