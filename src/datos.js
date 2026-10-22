@@ -224,7 +224,7 @@ export const NOTAS = Object.fromEntries(
 
 // ---------- Pagos ----------
 
-const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+export const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 export const PAGOS = Object.fromEntries(
   ALUMNOS.map((a) => {
     const lista = []
@@ -332,3 +332,35 @@ function crearClases() {
 }
 export const CLASES = crearClases()
 export const plantillaPorId = (id) => PLANTILLAS.find((p) => p.id === id)
+
+// ---------- Torneos: más fechas, estado de cada alumno y resultados del interno ----------
+
+export const ESTADOS_TORNEO = ['Invitado', 'Confirmado', 'Inscrito', 'Pagado']
+
+TORNEOS.push(
+  { id: 't4', nombre: 'Liga Municipal, fecha 4', fecha: enDias(23), sede: 'Parque Deportivo Oriente', tipo: 'Externo', distancias: '30 y 50 m', inscripcionHasta: enDias(15), costo: 350, alumnos: ALUMNOS.filter((a) => a.grupo === 'Avanzado').slice(0, 6).map((a) => a.id) },
+  { id: 't5', nombre: 'Copa de Navidad del club', fecha: enDias(58), sede: 'Campo del club', tipo: 'Interno', distancias: '18 m', inscripcionHasta: enDias(50), costo: 0, alumnos: [] },
+  { id: 't0', nombre: 'Abierto de Otoño', fecha: haceDias(18), sede: 'Club Halcones', tipo: 'Externo', distancias: '50 y 70 m', inscripcionHasta: haceDias(30), costo: 700, alumnos: equipo.slice(0, 4).map((a) => a.id), resultado: 'Oro en recurvo varonil y bronce por equipos' },
+)
+TORNEOS.sort((a, b) => a.fecha - b.fecha)
+for (const t of TORNEOS) {
+  t.estados = Object.fromEntries(t.alumnos.map((id) => [id, diasDesde(t.fecha) > 0 ? 'Pagado' : elegir(ESTADOS_TORNEO)]))
+}
+
+/** Resultados del torneo interno en curso: cada alumno lleva sus tandas capturadas desde la app. */
+export const RESULTADOS_INTERNO = TORNEOS.find((t) => t.id === 't2').alumnos.map((id) => {
+  const a = alumnoPorId(id)
+  const prom = promedio(sesionesEntre(a, 30)) ?? 6
+  const tandas = entero(6, 12)
+  const puntos = Math.round(tandas * 6 * Math.min(10, Math.max(2, prom + normal() * 0.35)))
+  return { id, tandas, puntos, dieces: Math.round((puntos / 10) * entre(0.1, 0.35)) }
+})
+
+// ---------- Pagos del club por mes (para la gráfica de ingresos) ----------
+
+export const INGRESOS = Array.from({ length: 6 }, (_, i) => {
+  const fecha = new Date(HOY.getFullYear(), HOY.getMonth() - (5 - i), 1)
+  const esperado = ALUMNOS.reduce((s, a) => s + a.mensualidad, 0)
+  const cobrado = i === 5 ? Math.round(esperado * 0.62) : Math.round(esperado * entre(0.82, 0.97))
+  return { mes: MESES[fecha.getMonth()], esperado, cobrado }
+})

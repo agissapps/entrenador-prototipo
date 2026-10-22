@@ -5,6 +5,10 @@ import Panel from './pantallas/Panel.jsx'
 import Alumnos from './pantallas/Alumnos.jsx'
 import Perfil from './pantallas/Perfil.jsx'
 import Entrenamientos from './pantallas/Entrenamientos.jsx'
+import Torneos from './pantallas/Torneos.jsx'
+import Metas from './pantallas/Metas.jsx'
+import Agenda from './pantallas/Agenda.jsx'
+import Pagos from './pantallas/Pagos.jsx'
 import Pronto from './pantallas/Pronto.jsx'
 import SelectorVariante from './SelectorVariante.jsx'
 
@@ -13,10 +17,10 @@ const SECCIONES = [
   { ruta: '', nombre: 'Panel', Icono: LayoutDashboard },
   { ruta: 'alumnos', nombre: 'Alumnos', Icono: Users },
   { ruta: 'entrenamientos', nombre: 'Entrenamientos', Icono: Dumbbell },
-  { ruta: 'metas', nombre: 'Metas', Icono: Target, pronto: true },
-  { ruta: 'torneos', nombre: 'Torneos', Icono: Trophy, pronto: true },
-  { ruta: 'agenda', nombre: 'Agenda', Icono: CalendarDays, pronto: true },
-  { ruta: 'pagos', nombre: 'Pagos', Icono: Wallet, pronto: true },
+  { ruta: 'metas', nombre: 'Metas', Icono: Target },
+  { ruta: 'torneos', nombre: 'Torneos', Icono: Trophy },
+  { ruta: 'agenda', nombre: 'Agenda', Icono: CalendarDays },
+  { ruta: 'pagos', nombre: 'Pagos', Icono: Wallet },
 ]
 
 const TEMAS = {
@@ -67,6 +71,10 @@ export default function App() {
   if (seccion === 'alumnos' && id) pantalla = <Perfil id={id} />
   else if (seccion === 'alumnos') pantalla = <Alumnos />
   else if (seccion === 'entrenamientos') pantalla = <Entrenamientos />
+  else if (seccion === 'torneos') pantalla = <Torneos />
+  else if (seccion === 'metas') pantalla = <Metas />
+  else if (seccion === 'agenda') pantalla = <Agenda />
+  else if (seccion === 'pagos') pantalla = <Pagos />
   else if (actual.pronto) pantalla = <Pronto nombre={actual.nombre} Icono={actual.Icono} />
   else pantalla = <Panel />
 
