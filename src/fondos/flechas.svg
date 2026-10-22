@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Dos flechas en diagonal por mosaico, desfasadas para que el patrón no se vea en filas. -->
+  <g transform="translate(18 62) rotate(-35)">
+    <line x1="0" y1="0" x2="58" y2="0" />
+    <path d="M58 -5 L68 0 L58 5 Z" fill="#000" />
+    <path d="M0 0 L-8 -6 M6 0 L-2 -6 M0 0 L-8 6 M6 0 L-2 6" />
+  </g>
+  <g transform="translate(100 150) rotate(-35)">
+    <line x1="0" y1="0" x2="58" y2="0" />
+    <path d="M58 -5 L68 0 L58 5 Z" fill="#000" />
+    <path d="M0 0 L-8 -6 M6 0 L-2 -6 M0 0 L-8 6 M6 0 L-2 6" />
+  </g>
+  <circle cx="140" cy="40" r="3" fill="#000" stroke="none" />
+  <circle cx="60" cy="125" r="2" fill="#000" stroke="none" />
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" fill="none" stroke="#000">
+  <!-- Una diana grande de diez anillos, solo con el contorno de cada uno. -->
+  <circle cx="400" cy="400" r="390" stroke-width="3" />
+  <circle cx="400" cy="400" r="351" stroke-width="1.5" />
+  <circle cx="400" cy="400" r="312" stroke-width="3" />
+  <circle cx="400" cy="400" r="273" stroke-width="1.5" />
+  <circle cx="400" cy="400" r="234" stroke-width="3" />
+  <circle cx="400" cy="400" r="195" stroke-width="1.5" />
+  <circle cx="400" cy="400" r="156" stroke-width="3" />
+  <circle cx="400" cy="400" r="117" stroke-width="1.5" />
+  <circle cx="400" cy="400" r="78" stroke-width="3" />
+  <circle cx="400" cy="400" r="39" stroke-width="1.5" />
+  <circle cx="400" cy="400" r="12" stroke-width="1.5" />
+  <line x1="388" y1="400" x2="412" y2="400" stroke-width="1.5" />
+  <line x1="400" y1="388" x2="400" y2="412" stroke-width="1.5" />
+</svg>
