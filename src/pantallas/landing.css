@@ -280,15 +280,17 @@
 .franja-oscura .app-telefonos span { color: rgb(255 255 255 / 68%); }
 
 /* Planes */
-.planes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.planes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
 .plan { position: relative; display: flex; flex-direction: column; padding: 28px; border-radius: 20px; background: var(--superficie); box-shadow: var(--sombra-1), inset 0 0 0 1px var(--linea); }
 .plan.recomendado { box-shadow: var(--sombra-3), inset 0 0 0 2px var(--acento); }
 .plan.recomendado { transform: translateY(-8px); }
 .plan-insignia { position: absolute; top: -12px; left: 28px; padding: 4px 12px; border-radius: 99px; background: var(--acento); color: var(--acento-tinta); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.04em; }
+.plan-insignia.cupo { background: #d7372f; color: #fff; }
+.plan.con-cupo { box-shadow: var(--sombra-1), inset 0 0 0 1.5px rgb(215 55 47 / 45%); }
 .plan h3 { margin: 0; font-size: 1.4rem; font-weight: 900; }
 .plan-para { margin: 4px 0 18px; color: var(--secundario); }
 .plan-precio { display: flex; align-items: baseline; gap: 6px; }
-.por-definir { color: var(--tinta); font-size: 2.4rem; font-weight: 900; letter-spacing: -0.02em; }
+.plan-precio .precio { color: var(--tinta); font-size: 2.4rem; font-weight: 900; letter-spacing: -0.02em; }
 .plan-precio small, .plan-anual { color: var(--secundario); }
 .plan-anual { margin: 2px 0 18px; font-size: 0.9rem; }
 .plan-limites { display: grid; gap: 8px; margin: 0; padding: 14px 0; border-block: 1px solid var(--linea); }
@@ -380,7 +382,7 @@
   .modulos-lista { position: static; display: flex; overflow-x: auto; scrollbar-width: none; }
   .modulos-lista button { flex: none; white-space: nowrap; }
   .modulos-lista button.activo { box-shadow: var(--sombra-1), inset 0 -3px 0 var(--acento); }
-  .planes { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
+  .planes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; }
   .plan.recomendado { transform: none; }
   .cierre, .preguntas-seccion, .app-seccion { grid-template-columns: minmax(0, 1fr); }
   .preguntas-lado { position: static; display: grid; grid-template-columns: 1fr auto; column-gap: 20px; align-items: end; }
@@ -398,6 +400,7 @@
   .app-telefonos li:nth-child(even) { margin-top: 0; }
 }
 @media (max-width: 760px) {
+  .planes { grid-template-columns: minmax(0, 1fr); max-width: 460px; margin-inline: auto; }
   .mapache-tableta { width: 104px; margin-right: 0; }
   .cierre::before { background-position: 20% 0; background-size: auto 55%; }
   .cierre::after { background: linear-gradient(180deg, rgb(14 33 76 / 75%), rgb(14 33 76 / 60%) 35%, #0e214c 58%); }

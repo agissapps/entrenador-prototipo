@@ -131,28 +131,47 @@ const CAPTURAS = [
   { archivo: 'flechas', titulo: 'Arco y flechas', texto: 'Puestas a punto y juegos de flechas guardados.', alt: 'Editar un juego de flechas con su spine, largo y peso de punta' },
 ]
 
+// Precios en pesos mexicanos, por club y por mes. Pagando el año se regalan 2 meses.
+// El plan Gratis tiene cupo: por ahora solo 5 clubes (se irán abriendo más lugares).
+const LUGARES_GRATIS = 5
 const PLANES = [
+  {
+    nombre: 'Gratis',
+    para: 'Para empezar con un grupo pequeño',
+    mensual: 0,
+    alumnos: 'Hasta 5',
+    entrenadores: '1',
+    incluye: ['Panel, alumnos, entrenamientos y metas', 'Agenda del club', '1 torneo activo a la vez'],
+    boton: 'Crear mi club gratis',
+    cupo: true,
+  },
   {
     nombre: 'Básico',
     para: 'Para entrenadores independientes',
-    alumnos: 'Hasta —',
-    entrenadores: '1',
-    incluye: ['Panel y línea de tiro', 'Alumnos con su ficha', 'Entrenamientos y plantillas', 'Metas', 'Agenda'],
+    mensual: 399,
+    alumnos: 'Hasta 40',
+    entrenadores: 'Hasta 2',
+    incluye: ['Todo lo del plan Gratis', 'Torneos sin límite', 'Pagos y recordatorios'],
+    boton: 'Elegir Básico',
   },
   {
     nombre: 'Club',
     para: 'Para clubes pequeños y medianos',
-    alumnos: 'Hasta —',
-    entrenadores: 'Hasta —',
-    incluye: ['Todo lo del Básico', 'Torneos y equipos', 'Pagos y recordatorios', 'Ingresos del club'],
+    mensual: 849,
+    alumnos: 'Hasta 100',
+    entrenadores: 'Hasta 5',
+    incluye: ['Todo lo del plan Básico', 'Ingresos del club', 'Varios grupos y entrenadores'],
+    boton: 'Elegir Club',
     recomendado: true,
   },
   {
     nombre: 'Profesional',
-    para: 'Para clubes con varios entrenadores',
-    alumnos: 'Por definir',
-    entrenadores: 'Varios',
-    incluye: ['Todo lo del Club', 'Varios entrenadores en el mismo club', 'Grupos sin límite'],
+    para: 'Para academias y clubes grandes',
+    mensual: 1449,
+    alumnos: 'Hasta 250',
+    entrenadores: 'Hasta 10',
+    incluye: ['Todo lo del plan Club', 'Más alumnos y entrenadores', 'Para varios grupos de competencia'],
+    boton: 'Elegir Profesional',
   },
 ]
 
@@ -162,7 +181,7 @@ const PREGUNTAS = [
   ['¿Puedo importar mis alumnos desde Excel?', 'Todavía no. Por ahora invitas a cada alumno desde la sección Alumnos. Importar una lista está entre lo que queremos agregar.'],
   ['¿Puedo administrar varios grupos?', 'Sí. Cada alumno va en un grupo y puedes filtrar por grupo o por estilo de arco en las listas, las metas y los pagos.'],
   ['¿Cómo se registran los pagos?', 'Los anotas tú cuando el alumno paga, y el panel te dice quién está pendiente o atrasado para mandarle un recordatorio. Cobrar con tarjeta desde la página queda para más adelante.'],
-  ['¿Puedo cancelar mi suscripción?', 'Los planes todavía se están definiendo. Cuando estén listos, aquí vas a encontrar cómo cancelar y qué pasa con tu cuenta.'],
+  ['¿Puedo cancelar mi suscripción?', 'Las condiciones para cancelar y qué pasa con los datos de tu club se publicarán con los términos del servicio, antes de empezar a cobrar.'],
   ['¿Qué sucede con mis datos?', 'Esta página es un prototipo: no guarda ni manda nada, y todos los datos son de un club inventado. Las reglas de privacidad del servicio se publicarán antes de abrirlo.'],
   ['¿Puedo probar el sistema antes de contratarlo?', 'Sí. Con el botón «Probar el sistema» entras al panel con un club de prueba de 40 arqueros, sin registrarte.'],
 ]
@@ -618,18 +637,19 @@ export default function Landing({ sesion, tema, cambiarTema }) {
           <div className="l-cabeza">
             <Etiqueta distancia="50 m" />
             <h2 id="titulo-planes">Un plan para cada tamaño de club.</h2>
-            <p>Los precios aún no están definidos. Escríbenos y te contamos cuál le queda a tu club.</p>
+            <p>Precios en pesos mexicanos, por club y por mes. Tus alumnos usan la app gratis, y si pagas el año te regalamos 2 meses.</p>
           </div>
           <div className="planes">
             {PLANES.map((p) => (
-              <article key={p.nombre} className={`plan ${p.recomendado ? 'recomendado' : ''}`}>
+              <article key={p.nombre} className={`plan ${p.recomendado ? 'recomendado' : ''} ${p.cupo ? 'con-cupo' : ''}`}>
                 {p.recomendado && <span className="plan-insignia">Recomendado</span>}
+                {p.cupo && <span className="plan-insignia cupo">Solo {LUGARES_GRATIS} lugares</span>}
                 <h3>{p.nombre}</h3>
                 <p className="plan-para">{p.para}</p>
                 <div className="plan-precio">
-                  <span className="por-definir">$ —</span><small>al mes</small>
+                  <span className="precio">{p.mensual ? pesos(p.mensual) : '$0'}</span><small>al mes</small>
                 </div>
-                <p className="plan-anual">o $ — al año</p>
+                <p className="plan-anual">{p.mensual ? `o ${pesos(p.mensual * 10)} al año` : 'No pide tarjeta'}</p>
                 <dl className="plan-limites">
                   <div><dt>Alumnos</dt><dd>{p.alumnos}</dd></div>
                   <div><dt>Entrenadores</dt><dd>{p.entrenadores}</dd></div>
@@ -637,11 +657,15 @@ export default function Landing({ sesion, tema, cambiarTema }) {
                 <ul className="lista-check">
                   {p.incluye.map((x) => <li key={x}><Check size={17} aria-hidden="true" /> {x}</li>)}
                 </ul>
-                <button className={`l-boton ${p.recomendado ? 'oro' : 'borde'}`} onClick={() => pedirDemo(p.nombre)}>Consultar precio</button>
+                {p.cupo ? (
+                  <a className="l-boton oro" href="#/registro">{p.boton}</a>
+                ) : (
+                  <button className={`l-boton ${p.recomendado ? 'oro' : 'borde'}`} onClick={() => pedirDemo(p.nombre)}>{p.boton}</button>
+                )}
               </article>
             ))}
           </div>
-          <p className="nota-demo">El reparto de funciones entre planes es un ejemplo y puede cambiar.</p>
+          <p className="nota-demo">El plan Gratis es para los primeros {LUGARES_GRATIS} clubes; iremos abriendo más lugares.</p>
         </section>
 
         {/* 9. Preguntas frecuentes */}
