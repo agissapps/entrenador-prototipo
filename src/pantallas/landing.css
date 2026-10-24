@@ -105,14 +105,16 @@
 .heroe::before, .heroe::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .heroe::before { background: var(--foto-cierre, none) center 40% / cover no-repeat; transform: scaleX(-1); filter: brightness(1.8) saturate(1.45) contrast(1.05); }
 .heroe::after {
-  /* La foto se aclara para que se vean las dianas; el azul de la diana solo la vela un poco. */
+  /* Atardecer: azul de la diana arriba, franja roja y el brillo naranja del sol sobre las dianas, y
+     de nuevo azul abajo para pasar a la siguiente sección. */
   background:
-    radial-gradient(ellipse 40% 45% at 22% 28%, rgb(242 183 5 / 14%), transparent 70%),
-    linear-gradient(90deg, rgb(14 33 76 / 40%) 0%, rgb(14 33 76 / 42%) 45%, rgb(14 33 76 / 55%) 100%),
-    linear-gradient(180deg, rgb(14 33 76 / 45%) 0%, transparent 25%, transparent 65%, rgb(14 33 76 / 90%) 100%);
+    radial-gradient(ellipse 50% 38% at 22% 34%, rgb(255 160 60 / 36%), transparent 70%),
+    radial-gradient(ellipse 85% 55% at 35% 42%, rgb(215 55 47 / 22%), transparent 75%),
+    linear-gradient(90deg, transparent 50%, rgb(14 33 76 / 35%) 100%),
+    linear-gradient(180deg, rgb(14 33 76 / 70%) 0%, rgb(70 34 96 / 32%) 26%, rgb(214 92 52 / 14%) 44%, rgb(14 33 76 / 38%) 68%, rgb(14 33 76 / 92%) 100%);
 }
 .heroe-anillos { position: absolute; width: min(1100px, 120vw); right: -18%; top: 50%; translate: 0 -50%; pointer-events: none; }
-.heroe-anillos circle { fill: none; stroke: rgb(255 255 255 / 5%); stroke-width: 1; }
+.heroe-anillos circle { fill: none; stroke: rgb(255 255 255 / 2.5%); stroke-width: 1; }
 .heroe-texto { position: relative; z-index: 1; }
 .heroe h1 { font-size: clamp(2.6rem, 1.4rem + 3.6vw, 4.6rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.03em;  text-shadow: 0 2px 24px rgb(0 0 0 / 45%); }
 .heroe-sub { margin: 22px 0 30px; max-width: 34em; font-size: 1.12rem; line-height: 1.6; color: rgb(255 255 255 / 72%);  text-shadow: 0 1px 12px rgb(0 0 0 / 55%); }
@@ -320,12 +322,12 @@
 }
 /* La foto del campo va volteada para que las dianas queden a la izquierda, junto al mapache, y no detrás del formulario. */
 .cierre::before, .cierre::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.cierre::before { background: var(--foto-cierre, none) center 35% / cover no-repeat; transform: scaleX(-1); }
+.cierre::before { background: var(--foto-cierre, none) center 35% / cover no-repeat; transform: scaleX(-1); filter: brightness(1.6) saturate(1.35); }
 .cierre::after {
   background:
-    radial-gradient(ellipse 60% 70% at 12% 40%, rgb(215 55 47 / 26%), transparent 70%),
-    radial-gradient(ellipse 45% 50% at 18% 20%, rgb(242 183 5 / 22%), transparent 70%),
-    linear-gradient(180deg, rgb(14 33 76 / 82%) 0%, rgb(14 33 76 / 35%) 60%, rgb(14 33 76 / 60%) 100%);
+    radial-gradient(ellipse 50% 40% at 24% 34%, rgb(255 160 60 / 34%), transparent 70%),
+    radial-gradient(ellipse 85% 55% at 35% 42%, rgb(215 55 47 / 22%), transparent 75%),
+    linear-gradient(180deg, rgb(14 33 76 / 78%) 0%, rgb(70 34 96 / 34%) 28%, rgb(214 92 52 / 14%) 46%, rgb(14 33 76 / 45%) 72%, rgb(14 33 76 / 80%) 100%);
 }
 .cierre .heroe-anillos { right: auto; left: -30%; }
 .cierre-texto { position: relative; z-index: 1; }
