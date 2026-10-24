@@ -24,6 +24,10 @@ export function Logo({ tam = 34 }) {
 
 const BASE = import.meta.env.BASE_URL
 
+// La foto del campo se usa desde la hoja de estilos (con var()), y ahí una ruta relativa se
+// resolvería contra la carpeta assets/ y no cargaría; por eso va con la dirección completa.
+const FOTO_CAMPO = { '--foto-cierre': `url("${new URL(`${BASE}fondos/campo-atardecer.jpg`, document.baseURI).href}")` }
+
 const irA = (id) => document.getElementById(id)?.scrollIntoView({ behavior: sinMovimiento() ? 'auto' : 'smooth', block: 'start' })
 
 const NAVEGACION = [
@@ -511,7 +515,7 @@ export default function Landing({ sesion, tema, cambiarTema }) {
 
       <main>
         {/* 1. Héroe */}
-        <section className="heroe" aria-labelledby="titulo-heroe" style={{ '--foto-cierre': `url(${BASE}fondos/campo-atardecer.jpg)` }}>
+        <section className="heroe" aria-labelledby="titulo-heroe" style={FOTO_CAMPO}>
           <svg className="heroe-anillos" viewBox="0 0 400 400" aria-hidden="true">
             {[196, 168, 140, 112, 84, 56, 28].map((r) => <circle key={r} cx="200" cy="200" r={r} />)}
           </svg>
@@ -686,7 +690,7 @@ export default function Landing({ sesion, tema, cambiarTema }) {
         </section>
 
         {/* 10. Cierre */}
-        <section className="cierre" id="contacto" aria-labelledby="titulo-cierre" style={{ '--foto-cierre': `url(${BASE}fondos/campo-atardecer.jpg)` }}>
+        <section className="cierre" id="contacto" aria-labelledby="titulo-cierre" style={FOTO_CAMPO}>
           <svg className="heroe-anillos" viewBox="0 0 400 400" aria-hidden="true">
             {[196, 168, 140, 112, 84, 56, 28].map((r) => <circle key={r} cx="200" cy="200" r={r} />)}
           </svg>
