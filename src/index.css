@@ -140,8 +140,9 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-/* La letra crece con la pantalla: 15 px en un celular, 16 en una laptop y hasta 19 en una pantalla grande o 4K. Todo lo demás está en rem y crece con ella. */
-html { font-size: clamp(15px, 0.35vw + 11.5px, 19px); }
+/* La letra crece con la pantalla: 15 px en un celular, 16 en una laptop y hasta 19 en una pantalla grande o 4K. Todo lo demás está en rem y crece con ella.
+   Va en rem (no en px) para respetar el tamaño de letra que la persona eligió en su navegador: con el de fábrica (16 px) da lo mismo que antes. */
+html { font-size: clamp(0.9375rem, 0.35vw + 0.71875rem, 1.1875rem); }
 body {
   background: var(--fondo);
   color: var(--tinta);
@@ -557,8 +558,12 @@ textarea { width: 100%; resize: vertical; }
 .pronto p { color: var(--secundario); }
 .pronto-icono { width: 72px; height: 72px; border-radius: 22px; display: grid; place-items: center; background: var(--bosque); color: var(--oro); box-shadow: var(--sombra-2); }
 
+/* Menos movimiento: se quitan las animaciones y las transiciones que mueven, giran o cambian de tamaño,
+   pero se dejan los cambios de color al pasar el ratón, que no marean. Las animaciones que solo siguen
+   el desplazamiento (la orilla desvanecida de las pestañas) se quedan: no se mueve nada por su cuenta. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  :not(.modulos-lista), ::before, ::after { animation: none !important; }
+  *, *::before, *::after { transition-property: color, background-color, border-color, outline-color, opacity, box-shadow, filter !important; }
 }
 
 /* ---------- Pantallas medianas y celular ---------- */

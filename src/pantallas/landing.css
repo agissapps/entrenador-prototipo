@@ -34,6 +34,11 @@
   --boton-sombra: 0 6px 18px -6px rgb(242 183 5 / 35%);
 }
 
+/* Los títulos reparten sus palabras parejo entre renglones (sin una palabra sola abajo) y los
+   párrafos de las cabezas evitan dejar una palabra suelta al final. */
+.landing :is(h1, h2, h3) { text-wrap: balance; }
+.landing :is(.heroe-sub, .l-cabeza p, .app-texto > p, .cierre-texto > p, .modulo-texto p) { text-wrap: pretty; }
+
 .landing :focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; border-radius: 6px; }
 
 .saltar { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--acento); color: var(--acento-tinta); padding: 8px 14px; border-radius: 8px; font-weight: 700; }
@@ -65,6 +70,8 @@
 /* ---------- Barra de arriba ---------- */
 /* Transparente sobre el héroe; al bajar se vuelve azul de la diana y una línea dorada marca lo recorrido. */
 .landing { --alto-barra: 72px; }
+/* Al saltar a una sección (o al pasar con Tab), el título queda abajo de la barra y no tapado por ella. */
+html:has(.landing) { scroll-padding-top: calc(72px + 16px); }
 .landing-barra {
   position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 20px; height: var(--alto-barra);
   padding: 0 clamp(16px, 5vw, 72px); color: #fff; background: transparent;
@@ -181,12 +188,15 @@
 .modulos { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 28px; align-items: start; }
 .modulos-lista { position: sticky; top: 90px; display: grid; gap: 4px; }
 .modulos-lista button {
-  display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 0; border-radius: 12px; background: none;
+  position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 0; border-radius: 12px; background: none;
   color: var(--secundario); font: 700 1rem var(--texto); text-align: left; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 .modulos-lista button:hover { background: var(--superficie); color: var(--tinta); }
-.modulos-lista button.activo { background: var(--superficie); color: var(--tinta); box-shadow: var(--sombra-1), inset 3px 0 0 var(--acento); }
-.modulos-lista button.activo svg { color: var(--acento); }
+/* La pestaña elegida se marca con una línea (un borde), no solo con color ni con sombra: el modo de
+   alto contraste de Windows borra fondos y sombras, pero deja los bordes. */
+.modulos-lista [aria-selected='true'] { background: var(--superficie); color: var(--tinta); box-shadow: var(--sombra-1); }
+.modulos-lista [aria-selected='true'] svg { color: var(--acento); }
+.modulos-lista [aria-selected='true']::after { content: ''; position: absolute; inset: 10px auto 10px 0; border-inline-start: 3px solid var(--acento); border-radius: 3px; }
 .modulo-detalle {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; min-height: 460px;
   padding: clamp(22px, 3vw, 40px); border-radius: 20px; background: var(--superficie); box-shadow: var(--sombra-2); animation: entrar 0.4s var(--curva) backwards;
@@ -242,6 +252,13 @@
 .visual-barra .cobrado { width: 100%; border-radius: inherit; background: var(--acento); transform-origin: bottom; animation: aparecer-barra 0.8s var(--curva) backwards; }
 .visual-barra small { color: var(--secundario); font-size: 0.75rem; text-transform: capitalize; }
 
+/* Lo que crece cada orilla desvanecida de las pestañas en el celular. Van registradas para que el
+   tamaño cambie poco a poco al deslizar y no de golpe. */
+@property --orilla-inicio { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --orilla-fin { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@keyframes mostrar-orilla-inicio { to { --orilla-inicio: var(--desvanecer); } }
+@keyframes ocultar-orilla-fin { from { --orilla-fin: var(--desvanecer); } }
+
 /* Franjas a todo lo ancho para que la página alterne: claro, azul suave y azul de la diana. */
 .franja-suave, .franja-oscura { position: relative; isolation: isolate; }
 .franja-suave::before, .franja-oscura::before { content: ''; position: absolute; inset: 0 -100vmax; z-index: -1; background: var(--franja); }
@@ -254,7 +271,7 @@
 }
 .franja-oscura .app-texto > p { color: rgb(255 255 255 / 72%); }
 .franja-oscura .tienda-qr { box-shadow: 0 0 0 1px rgb(255 255 255 / 20%); }
-.franja-suave .modulos-lista button.activo, .franja-suave .modulos-lista button:hover { background: var(--superficie); }
+.franja-suave .modulos-lista [aria-selected='true'], .franja-suave .modulos-lista button:hover { background: var(--superficie); }
 
 /* La app del arquero: título y fichas arriba, y cuatro pantallas reales de la app en grande. */
 .app-seccion { max-width: 1520px; padding-block: clamp(56px, 6vw, 88px); }
@@ -309,11 +326,23 @@
 .preguntas { border-top: 1px solid var(--linea); }
 .pregunta { border-bottom: 1px solid var(--linea); }
 .pregunta[open] summary { color: var(--acento); }
-.pregunta summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 4px; font-size: 1.05rem; font-weight: 800; list-style: none; cursor: pointer; }
+/* La flechita va justo antes de la pregunta (no hasta la otra orilla), para que se lea junto con ella:
+   apunta a la derecha cerrada y hacia abajo abierta. */
+.pregunta summary { display: flex; align-items: center; gap: 12px; padding: 20px 4px; font-size: 1.05rem; font-weight: 800; list-style: none; cursor: pointer; }
 .pregunta summary::-webkit-details-marker { display: none; }
-.pregunta summary svg { flex: none; color: var(--acento); transition: transform 0.25s var(--curva); }
-.pregunta[open] summary svg { transform: rotate(180deg); }
-.pregunta p { margin: 0; max-width: 62ch; padding: 0 4px 22px; color: var(--secundario); line-height: 1.6; }
+.pregunta summary svg { flex: none; color: var(--acento); rotate: -90deg; }
+.pregunta[open] summary svg { rotate: 0deg; }
+.pregunta p { margin: 0; max-width: 62ch; padding: 0 4px 22px 36px; color: var(--secundario); line-height: 1.6; text-wrap: pretty; }
+/* La respuesta se abre y se cierra deslizando, en los navegadores que saben animar hasta «auto». */
+.pregunta::details-content { interpolate-size: allow-keywords; overflow: clip; contain: layout; }
+.pregunta:not([open])::details-content { block-size: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .pregunta summary svg { transition: rotate 0.25s var(--curva); }
+  .pregunta::details-content {
+    transition: block-size 0.3s ease-in-out, content-visibility 0.3s;
+    transition-behavior: allow-discrete;
+  }
+}
 
 /* Cierre */
 .cierre {
@@ -380,9 +409,26 @@
   .heroe { grid-template-columns: minmax(0, 1fr); }
   .heroe-visual { margin: 8px 0 0 24px; }
   .modulos { grid-template-columns: minmax(0, 1fr); }
-  .modulos-lista { position: static; display: flex; overflow-x: auto; scrollbar-width: none; }
-  .modulos-lista button { flex: none; white-space: nowrap; }
-  .modulos-lista button.activo { box-shadow: var(--sombra-1), inset 0 -3px 0 var(--acento); }
+  /* En una fila que se desliza. Cada orilla se desvanece solo cuando hay más pestañas de ese lado,
+     para que se note que hay que deslizar (la barra de desplazamiento va escondida). */
+  .modulos-lista {
+    position: static; display: flex; overflow-x: auto; scrollbar-width: none;
+    padding-block: 4px 8px; scroll-snap-type: inline proximity; scroll-padding-inline: var(--desvanecer);
+    --desvanecer: 3rem;
+  }
+  .modulos-lista button { flex: none; white-space: nowrap; scroll-snap-align: start; }
+  .modulos-lista [aria-selected='true']::after { inset: auto 12px 0; border-inline-start: 0; border-block-end: 3px solid var(--acento); }
+  @supports (animation-timeline: scroll()) {
+    .modulos-lista {
+      mask:
+        linear-gradient(black, black) no-clip subtract,
+        linear-gradient(to right, black, transparent) 0 0 / var(--orilla-inicio) 100% no-repeat no-clip,
+        linear-gradient(to right, transparent, black) 100% 0 / var(--orilla-fin) 100% no-repeat no-clip;
+      animation: mostrar-orilla-inicio linear both, ocultar-orilla-fin linear both;
+      animation-timeline: scroll(self inline);
+      animation-range: 0 var(--desvanecer), calc(100% - var(--desvanecer)) 100%;
+    }
+  }
   .planes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 30px; }
   .plan.recomendado { transform: none; }
   .cierre, .preguntas-seccion, .app-seccion { grid-template-columns: minmax(0, 1fr); }

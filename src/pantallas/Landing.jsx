@@ -462,6 +462,28 @@ export default function Landing({ sesion, tema, cambiarTema }) {
     setPedido(new FormData(e.target).get('nombre')?.toString().trim() || 'entrenador')
   }
 
+  // Pestañas de Funcionalidades: la elegida queda a la vista dentro de su fila (solo se desliza la
+  // fila, no la página), y con las flechas del teclado se pasa de una a otra y se elige al llegar.
+  const elegirModulo = (id, boton) => {
+    setModulo(id)
+    try {
+      boton?.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest', behavior: sinMovimiento() ? 'auto' : 'smooth' })
+    } catch {
+      // navegadores viejos sin estas opciones: la pestaña se elige igual
+    }
+  }
+  const teclaPestana = (e) => {
+    const botones = [...e.currentTarget.querySelectorAll('[role="tab"]')]
+    const i = botones.indexOf(document.activeElement)
+    if (i < 0) return
+    const destino = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: botones.length - 1 }[e.key]
+    if (destino == null) return
+    e.preventDefault()
+    const n = (destino + botones.length) % botones.length
+    botones[n].focus({ preventScroll: true })
+    elegirModulo(MODULOS[n].id, botones[n])
+  }
+
   const actual = MODULOS.find((m) => m.id === modulo)
   const Visual = VISUALES[modulo]
 
@@ -581,9 +603,13 @@ export default function Landing({ sesion, tema, cambiarTema }) {
             <img className="mapache-tableta" src={`${BASE}mascota/tableta.png`} alt="El mapache entrenador señalando el panel en su tableta" width="437" height="520" loading="lazy" decoding="async" />
           </div>
           <div className="modulos">
-            <div className="modulos-lista" role="tablist" aria-label="Funcionalidades">
+            <div className="modulos-lista" role="tablist" aria-label="Funcionalidades" onKeyDown={teclaPestana}>
               {MODULOS.map((m) => (
-                <button key={m.id} role="tab" id={`tab-${m.id}`} aria-selected={modulo === m.id} aria-controls="modulo-detalle" className={modulo === m.id ? 'activo' : ''} onClick={() => setModulo(m.id)}>
+                <button
+                  key={m.id} type="button" role="tab" id={`tab-${m.id}`}
+                  aria-selected={modulo === m.id} tabIndex={modulo === m.id ? 0 : -1}
+                  onClick={(e) => elegirModulo(m.id, e.currentTarget)}
+                >
                   <m.Icono size={20} strokeWidth={1.9} aria-hidden="true" /> {m.nombre}
                 </button>
               ))}
@@ -682,7 +708,7 @@ export default function Landing({ sesion, tema, cambiarTema }) {
           <div className="preguntas">
             {PREGUNTAS.map(([p, r]) => (
               <details key={p} className="pregunta">
-                <summary>{p}<ChevronDown size={20} aria-hidden="true" /></summary>
+                <summary><ChevronDown size={20} aria-hidden="true" />{p}</summary>
                 <p>{r}</p>
               </details>
             ))}
